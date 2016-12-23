@@ -1,7 +1,18 @@
-var rightClickMenu = function(menu, bindElement) {
-    var self = this;
+var rightClickMenu = function(object) {
+    var menu = object.menu || null;
+    var bindElement = object.bindElement || null;
+    var onOpen = object.onOpen || null;
+
+    if (typeof onOpen !== 'function') {
+        onOpen = null;
+    }
+
     var elements = [];
-    if (bindElement instanceof HTMLCollection) {
+    if (
+        bindElement instanceof HTMLCollection ||
+        bindElement instanceof NodeList ||
+        bindElement instanceof Array
+    ) {
         for (var index in bindElement) {
             if (parseInt(index) == index) {
                 elements.push(bindElement[index]);
@@ -83,12 +94,7 @@ var rightClickMenu = function(menu, bindElement) {
                 }
             };
 
-            self.onMenuOpen(this);
+            onOpen(this);
         });
     }
-}
-
-rightClickMenu.prototype.onMenuOpen = function(rightClicked) {
-    // override this function to act on the clicked item when the menu is opened
-    return true;
 }
