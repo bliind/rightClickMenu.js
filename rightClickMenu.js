@@ -1,4 +1,14 @@
 var rightClickMenu = function(menu, bindElement) {
+    var elements = [];
+    if (bindElement instanceof HTMLCollection) {
+        for (var index in bindElement) {
+            if (parseInt(index) == index) {
+                elements.push(bindElement[index]);
+            }
+        }
+    } else {
+        elements.push(bindElement);
+    }
     menu.style.display = 'block';
     menu.style.visibility = 'hidden';
     menu.style.position = 'absolute';
@@ -51,25 +61,27 @@ var rightClickMenu = function(menu, bindElement) {
         }
     };
 
-    bindElement.addEventListener('contextmenu', function(event) {
-        if (event.shiftKey) {
-          return true;
-        }
-
-        event.preventDefault();
-
-        var place = menuHelper.getPlacement(menu, event);
-        menu.style.top = place.y + 'px';
-        menu.style.left = place.x + 'px';
-
-        menu.style.visibility = 'visible';
-
-        // nesting these here means we're only listening for mousedown/keydown when the menu is opened
-        document.addEventListener('mousedown', menuHelper.handleMouseClick);
-        document.onkeydown = function() {
-            if (event.keyCode == 27) {
-                menuHelper.hideMenu();
+    for (var i=0;i<elements.length;i++) {
+        elements[i].addEventListener('contextmenu', function(event) {
+            if (event.shiftKey) {
+                return true;
             }
-        };
-    });
+
+            event.preventDefault();
+
+            var place = menuHelper.getPlacement(menu, event);
+            menu.style.top = place.y + 'px';
+            menu.style.left = place.x + 'px';
+
+            menu.style.visibility = 'visible';
+
+            // nesting these here means we're only listening for mousedown/keydown when the menu is opened
+            document.addEventListener('mousedown', menuHelper.handleMouseClick);
+            document.onkeydown = function() {
+                if (event.keyCode == 27) {
+                    menuHelper.hideMenu();
+                }
+            };
+        });
+    }
 }
