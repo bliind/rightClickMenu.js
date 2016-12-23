@@ -38,6 +38,8 @@ var rightClickMenu = function(object) {
             return {top: y, left: x, bottom: (y + nodeHeight), right: (x + nodeWidth)};
         },
         getPlacement: function(node, event) {
+            var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+            var scrollLeft = (window.pageXOffset !== undefined) ? window.pageXOffset : (document.documentElement || document.body.parentNode || document.body).scrollLeft;
             var menuH = node.offsetHeight;
             var menuW = node.offsetWidth;
             var windowH = window.innerHeight;
@@ -53,7 +55,7 @@ var rightClickMenu = function(object) {
                 placeX = (placeX - menuW);
             }
 
-            return {x: placeX, y: placeY};
+            return {x: placeX + scrollLeft, y: placeY + scrollTop};
         },
         handleMouseClick: function (event) {
             var offset = menuHelper.getOffset(menu);
@@ -94,7 +96,7 @@ var rightClickMenu = function(object) {
                 }
             };
 
-            onOpen(this);
+            onOpen(menu, this);
         });
     }
 }
