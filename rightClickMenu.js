@@ -72,7 +72,6 @@ var rightClickMenu = function(menu, bindElement) {
             var place = menuHelper.getPlacement(menu, event);
             menu.style.top = place.y + 'px';
             menu.style.left = place.x + 'px';
-
             menu.style.visibility = 'visible';
 
             // nesting these here means we're only listening for mousedown/keydown when the menu is opened
