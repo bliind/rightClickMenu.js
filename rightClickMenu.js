@@ -1,4 +1,5 @@
 var rightClickMenu = function(menu, bindElement) {
+    var self = this;
     var elements = [];
     if (bindElement instanceof HTMLCollection) {
         for (var index in bindElement) {
@@ -81,6 +82,13 @@ var rightClickMenu = function(menu, bindElement) {
                     menuHelper.hideMenu();
                 }
             };
+
+            self.onMenuOpen(this);
         });
     }
+}
+
+rightClickMenu.prototype.onMenuOpen = function(rightClicked) {
+    // override this function to act on the clicked item when the menu is opened
+    return true;
 }
