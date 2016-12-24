@@ -5,16 +5,28 @@ Binds to an element's "contextmenu" (aka right click) and displays a provided el
 Example usage:
 
 ```javascript
-var fooMenuElement = document.getElementById('rightClickMenu');
-var fooMenuBinds = document.getElementsByClassName('foo');
-var fooMenu = new rightClickMenu({
-    menu: fooMenuElement,
-    bindElement: fooMenuBinds,
-    onOpen: function(object) {
-        var menu = object.menu;
-        var clickedElement = object.clickedElement;
-    }
-});
+    var fooMenuElement = document.getElementById('rightClickMenu');
+    var fooMenuBinds = document.getElementsByClassName('foo');
+    var fooMenu = new rightClickMenu({
+        menu: fooMenuElement,
+        bindElement: fooMenuBinds,
+        onOpen: function(object) {
+            var menu = object.menu;
+            var clickedElement = object.clickedElement;
+        }
+    });
+```
+
+Also works with jQuery:
+
+```javascript
+    var rcm = new rightClickMenu({
+        menu: $('#menu'),
+        bindElement: $('.foo'),
+        onOpen: function(obj) {
+            console.log(obj);
+        }
+    });
 ```
 
 `menu` is the element that will be displayed on right click. `bindElement` is an element, array of elements, NodeList, or HTMLCollection to bind to the right click action of.
