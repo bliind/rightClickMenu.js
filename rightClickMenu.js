@@ -7,7 +7,7 @@ var rightClickMenu = function(object) {
     }
 
     // make sure bindElement is a node, nodelist, array, htmlcollection
-    // if it's more than one node, break out the nodes into an array
+    // if it's more than one node, break out the elements into an array
     var elements = [];
     if (
         object.bindElement instanceof HTMLCollection ||
@@ -27,12 +27,12 @@ var rightClickMenu = function(object) {
 
     // die out if we can't find the menu or bind right click to elements
     if (!menu.tagName) {
-        console.error('"' + object.menu + '" is not a valid HTML element and cannot be used as a menu');
+        console.error('rightClickMenu error: "' + object.menu + '" is not a valid HTML element and cannot be used as a menu');
         return false;
     }
 
     if (elements.length == 0) {
-        console.error('"' + object.bindElement + '" is not a valid HTML element (or NodeList, HTMLCollection, or Array of HTML elements) and cannot be used as an element to bind to.');
+        console.error('rightClickMenu error: "' + object.bindElement + '" is not a valid HTML element (or NodeList, HTMLCollection, or Array of HTML elements) and cannot be used as an element to bind to.');
         return false;
     }
 
