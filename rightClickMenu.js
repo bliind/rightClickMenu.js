@@ -79,6 +79,11 @@ var rightClickMenu = function(object) {
 
             return {x: placeX + scrollLeft, y: placeY + scrollTop};
         },
+        hideMenu: function() {
+            menu.style.visibility = 'hidden';
+            document.removeEventListener('mousedown', menuHelper.handleMouseClick);
+            document.removeEventListener('keyup', menuHelper.handleEscKey);
+        },
         handleMouseClick: function(event) {
             var offset = menuHelper.getOffset(menu);
             offset.bottom = offset.top + menu.offsetHeight;
@@ -95,12 +100,7 @@ var rightClickMenu = function(object) {
                 menuHelper.hideMenu();
             }
         },
-        hideMenu: function() {
-            menu.style.visibility = 'hidden';
-            document.removeEventListener('mousedown', menuHelper.handleMouseClick);
-            document.removeEventListener('keyup', menuHelper.handleEscKey);
-        },
-        setRightClickListeners: function(event) {
+        handleContextMenu: function(event) {
             // if shift is held, let normal right click happen
             if (event.shiftKey) {
                 return true;
@@ -124,6 +124,6 @@ var rightClickMenu = function(object) {
     };
 
     for (var i=0;i<elements.length;i++) {
-        elements[i].addEventListener('contextmenu', menuHelper.setRightClickListeners);
+        elements[i].addEventListener('contextmenu', menuHelper.handleContextMenu);
     }
 }
