@@ -1,6 +1,6 @@
 # rightClickMenu.js
 
-Binds to an element's "contextmenu" (aka right click) and displays a provided element where the mouse is. The element is hidden when clicking in an area that is not the opened menu.
+Binds to an element's "contextmenu" (aka right click) and displays a provided element where the mouse is. The element is hidden when clicking in an area that is not the opened menu, or when the escape key is pressed.
 
 Example usage:
 
