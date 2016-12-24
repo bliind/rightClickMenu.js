@@ -1,23 +1,37 @@
+/**
+ * rightClickMenu.js
+ * https://github.com/bliind/rightClickMenu.js
+ */
 var rightClickMenu = function(object) {
     var menu = object.menu || null;
+    var bindElement = object.bindElement || null;
     var onOpen = object.onOpen || null;
 
     if (typeof onOpen !== 'function') {
         onOpen = null;
     }
 
+    // check for jquery objects and convert.
+    if (menu instanceof jQuery) {
+        menu = menu.get(0);
+    }
+
+    if (bindElement instanceof jQuery) {
+        bindElement = $.makeArray(bindElement);
+    }
+
     // make sure bindElement is a node, nodelist, array, htmlcollection
     // if it's more than one node, break out the elements into an array
     var elements = [];
     if (
-        object.bindElement instanceof HTMLCollection ||
-        object.bindElement instanceof NodeList ||
-        object.bindElement instanceof Array
+        bindElement instanceof HTMLCollection ||
+        bindElement instanceof NodeList ||
+        bindElement instanceof Array
     ) {
-        for (var index in object.bindElement) {
+        for (var index in bindElement) {
             if (parseInt(index) == index) {
-                if (object.bindElement[index].tagName) {
-                    elements.push(object.bindElement[index]);
+                if (bindElement[index].tagName) {
+                    elements.push(bindElement[index]);
                 }
             }
         }
@@ -27,12 +41,22 @@ var rightClickMenu = function(object) {
 
     // die out if we can't find the menu or bind right click to elements
     if (!menu.tagName) {
-        console.error('rightClickMenu error: "' + object.menu + '" is not a valid HTML element and cannot be used as a menu');
+        if (object.menu instanceof jQuery) {
+            console.error('rightClickMenu error: Error converting jQuery object for menu')
+        } else {
+            console.error('rightClickMenu error: "' + object.menu + '" is not a valid HTML element and cannot be used as a menu');
+        }
+
         return false;
     }
 
     if (elements.length == 0) {
-        console.error('rightClickMenu error: "' + object.bindElement + '" is not a valid HTML element (or NodeList, HTMLCollection, or Array of HTML elements) and cannot be used as an element to bind to.');
+        if (bindElement instanceof jQuery) {
+            console.error('rightClickMenu error: Error converting jQuery object for bindElement.');
+        } else {
+            console.error('rightClickMenu error: "' + object.bindElement + '" is not a valid HTML element (or NodeList, HTMLCollection, or Array of HTML elements) and cannot be used as an element to bind to.');
+        }
+
         return false;
     }
 
@@ -86,8 +110,6 @@ var rightClickMenu = function(object) {
         },
         handleMouseClick: function(event) {
             var offset = menuHelper.getOffset(menu);
-            offset.bottom = offset.top + menu.offsetHeight;
-            offset.right = offset.left + menu.offsetWidth;
 
             var mouse = { x: event.clientX, y: event.clientY };
 
@@ -118,7 +140,10 @@ var rightClickMenu = function(object) {
             document.addEventListener('keyup', menuHelper.handleKeyUp);
 
             if (null !== onOpen) {
-                onOpen(menu, this);
+                onOpen({
+                    menu: menu,
+                    clickedElement: this
+                });
             }
         }
     };
