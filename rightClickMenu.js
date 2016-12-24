@@ -12,12 +12,14 @@ var rightClickMenu = function(object) {
     }
 
     // check for jquery objects and convert.
-    if (menu instanceof jQuery) {
-        menu = menu.get(0);
-    }
+    if (typeof jQuery !== 'undefined') {
+        if (menu instanceof jQuery) {
+            menu = menu.get(0);
+        }
 
-    if (bindElement instanceof jQuery) {
-        bindElement = $.makeArray(bindElement);
+        if (bindElement instanceof jQuery) {
+            bindElement = $.makeArray(bindElement);
+        }
     }
 
     // make sure bindElement is a node, nodelist, array, htmlcollection
@@ -41,21 +43,13 @@ var rightClickMenu = function(object) {
 
     // die out if we can't find the menu or bind right click to elements
     if (!menu.tagName) {
-        if (object.menu instanceof jQuery) {
-            console.error('rightClickMenu error: Error converting jQuery object for menu')
-        } else {
-            console.error('rightClickMenu error: "' + object.menu + '" is not a valid HTML element and cannot be used as a menu');
-        }
+        console.error('rightClickMenu error: "' + object.menu + '" is not a valid HTML element and cannot be used as a menu');
 
         return false;
     }
 
     if (elements.length == 0) {
-        if (bindElement instanceof jQuery) {
-            console.error('rightClickMenu error: Error converting jQuery object for bindElement.');
-        } else {
-            console.error('rightClickMenu error: "' + object.bindElement + '" is not a valid HTML element (or NodeList, HTMLCollection, or Array of HTML elements) and cannot be used as an element to bind to.');
-        }
+        console.error('rightClickMenu error: "' + object.bindElement + '" is not a valid HTML element (or NodeList, HTMLCollection, or Array of HTML elements) and cannot be used as (an) element(s) to bind to contextmenu.');
 
         return false;
     }
