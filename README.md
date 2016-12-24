@@ -17,3 +17,5 @@ var fooMenu = new rightClickMenu({
 ```
 
 Where `rightClickMenu` is the ID of the element to be displayed (ie the menu) and `foo` is the element whose contextmenu to bind to.
+
+[Click here for a Codepen example](http://codepen.io/bliind/pen/bBypgZ)
