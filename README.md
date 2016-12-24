@@ -33,4 +33,4 @@ Also works with jQuery:
 
 `onOpen` is an optional function to bind to to act on the menu and/or clicked element when the menu is opened. It is passed an object that contains the HTML element of the menu, `menu`, and the HTML element of the right-clicked element, `clickedElement`.
 
-[Click here for a Codepen example](http://codepen.io/bliind/pen/bBypgZ)
+[Click here for a Codepen example](http://codepen.io/bliind/pen/ObYPjO)

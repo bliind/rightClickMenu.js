@@ -11,14 +11,14 @@ var rightClickMenu = function(object) {
         onOpen = null;
     }
 
-    // check for jquery objects and convert.
+    // check for jQuery objects and convert.
     if (typeof jQuery !== 'undefined') {
         if (menu instanceof jQuery) {
             menu = menu.get(0);
         }
 
         if (bindElement instanceof jQuery) {
-            bindElement = $.makeArray(bindElement);
+            bindElement = jQuery.makeArray(bindElement);
         }
     }
 
@@ -44,13 +44,11 @@ var rightClickMenu = function(object) {
     // die out if we can't find the menu or bind right click to elements
     if (!menu.tagName) {
         console.error('rightClickMenu error: "' + object.menu + '" is not a valid HTML element and cannot be used as a menu');
-
         return false;
     }
 
     if (elements.length == 0) {
         console.error('rightClickMenu error: "' + object.bindElement + '" is not a valid HTML element (or NodeList, HTMLCollection, or Array of HTML elements) and cannot be used as (an) element(s) to bind to contextmenu.');
-
         return false;
     }
 
@@ -100,7 +98,7 @@ var rightClickMenu = function(object) {
         hideMenu: function() {
             menu.style.visibility = 'hidden';
             document.removeEventListener('mousedown', menuHelper.handleMouseClick);
-            document.removeEventListener('keyup', menuHelper.handleEscKey);
+            document.removeEventListener('keyup', menuHelper.handleKeyUp);
         },
         handleMouseClick: function(event) {
             var offset = menuHelper.getOffset(menu);
@@ -112,6 +110,7 @@ var rightClickMenu = function(object) {
             }
         },
         handleKeyUp: function(event) {
+            // keyCode 27 == Esc
             if (event.keyCode == 27) {
                 menuHelper.hideMenu();
             }
