@@ -90,7 +90,7 @@ var rightClickMenu = function(object) {
                 menuHelper.hideMenu(event);
             }
         },
-        handleEscKey: function(event) {
+        handleKeyUp: function(event) {
             if (event.keyCode == 27) {
                 menuHelper.hideMenu();
             }
@@ -115,7 +115,7 @@ var rightClickMenu = function(object) {
 
             // nesting these here means we're only listening for mousedown/keydown when the menu is opened
             document.addEventListener('mousedown', menuHelper.handleMouseClick);
-            document.addEventListener('keyup', menuHelper.handleEscKey);
+            document.addEventListener('keyup', menuHelper.handleKeyUp);
 
             if (null !== onOpen) {
                 onOpen(menu, this);
